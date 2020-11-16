@@ -5,6 +5,11 @@ import MemoryToken from "../abis/MemoryToken.json";
 import brain from "../brain.png";
 
 class App extends Component {
+  async componentWillMount() {
+    await this.loadWeb3();
+    await this.loadBlockchainData();
+  }
+
   async loadWeb3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
@@ -16,6 +21,12 @@ class App extends Component {
         "Non-Ethereum browser detected. You should consider trying MetaMask!"
       );
     }
+  }
+
+  async loadBlockchainData() {
+    const web3 = window.web3;
+    const accounts = await web3.eth.getAccounts();
+    this.setState({ account: accounts[0] });
   }
 
   constructor(props) {
