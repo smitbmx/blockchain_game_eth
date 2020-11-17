@@ -132,7 +132,35 @@ class App extends Component {
   };
 
   checkForMatch = async () => {
-    alert("checking for match...");
+    const optionOneId = this.state.cardsChosenId[0];
+    const optionTwoId = this.state.cardsChosenId[1];
+
+    if (optionOneId == optionTwoId) {
+      alert("You have clicked the same image!");
+    } else if (this.state.cardsChosen[0] === this.state.cardsChosen[1]) {
+      alert("You found a match");
+      this.state.token.methods
+        .mint(
+          this.state.account,
+          window.location.origin + CARD_ARRAY[optionOneId].img.toString()
+        )
+        .send({ from: this.state.account })
+        .on("transactionHash", (hash) => {
+          this.setState({
+            cardsWon: [...this.state.cardsWon, optionOneId, optionTwoId],
+            tokenURIs: [...this.state.tokenURIs, CARD_ARRAY[optionOneId].img],
+          });
+        });
+    } else {
+      alert("Sorry, try again");
+    }
+    this.setState({
+      cardsChosen: [],
+      cardsChosenId: [],
+    });
+    if (this.state.cardsWon.length === CARD_ARRAY.length) {
+      alert("Congratulations! You found them all!");
+    }
   };
 
   constructor(props) {
