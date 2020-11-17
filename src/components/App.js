@@ -104,6 +104,37 @@ class App extends Component {
     }
   }
 
+  chooseImage = (cardId) => {
+    cardId = cardId.toString();
+    if (this.state.cardsWon.includes(cardId)) {
+      return window.location.origin + "/images/white.png";
+    } else if (this.state.cardsChosenId.includes(cardId)) {
+      return CARD_ARRAY[cardId].img;
+    } else {
+      return window.location.origin + "/images/blank.png";
+    }
+  };
+
+  flipCard = async (cardId) => {
+    let alreadyChosen = this.state.cardsChosen.length;
+
+    this.setState({
+      cardsChosen: [
+        ...this.state.cardsChosen,
+        this.state.cardArray[cardId].name,
+      ],
+      cardsChosenId: [...this.state.cardsChosenId, cardId],
+    });
+
+    if (alreadyChosen === 1) {
+      setTimeout(this.checkForMatch, 100);
+    }
+  };
+
+  checkForMatch = async () => {
+    alert("checking for match...");
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -151,7 +182,25 @@ class App extends Component {
               <div className="content mr-auto ml-auto">
                 <h1 className="d-4">Edit this file in App.js!</h1>
 
-                <div className="grid mb-4">{/* Code goes here... */}</div>
+                <div className="grid mb-4">
+                  {this.state.cardArray.map((card, key) => {
+                    return (
+                      <img
+                        key={key}
+                        src={this.chooseImage(key)}
+                        data-id={key}
+                        onClick={(event) => {
+                          let cardId = event.target.getAttribute("data-id");
+                          if (
+                            !this.state.cardsWon.includes(cardId.toString())
+                          ) {
+                            this.flipCard(cardId);
+                          }
+                        }}
+                      />
+                    );
+                  })}
+                </div>
 
                 <div>
                   {/* Code goes here... */}
