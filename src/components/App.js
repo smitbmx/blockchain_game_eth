@@ -55,11 +55,64 @@ const CARD_ARRAY = [
   },
 ];
 
+const CARD_ARRAY_KITTIES = [
+  {
+    name: "k1",
+    img: "/images/kitties/k1.jpg",
+  },
+  {
+    name: "k2",
+    img: "/images/kitties/k2.jpg",
+  },
+  {
+    name: "k3",
+    img: "/images/kitties/k3.jpg",
+  },
+  {
+    name: "k4",
+    img: "/images/kitties/k4.jpg",
+  },
+  {
+    name: "k5",
+    img: "/images/kitties/k5.jpg",
+  },
+  {
+    name: "k6",
+    img: "/images/kitties/k6.jpg",
+  },
+  {
+    name: "k1",
+    img: "/images/kitties/k1.jpg",
+  },
+  {
+    name: "k2",
+    img: "/images/kitties/k2.jpg",
+  },
+  {
+    name: "k3",
+    img: "/images/kitties/k3.jpg",
+  },
+  {
+    name: "k4",
+    img: "/images/kitties/k4.jpg",
+  },
+  {
+    name: "k5",
+    img: "/images/kitties/k5.jpg",
+  },
+  {
+    name: "k6",
+    img: "/images/kitties/k6.jpg",
+  },
+];
+
 class App extends Component {
   async componentWillMount() {
     await this.loadWeb3();
     await this.loadBlockchainData();
-    this.setState({ cardArray: CARD_ARRAY.sort(() => 0.5 - Math.random()) });
+    this.setState({
+      cardArray: CARD_ARRAY_KITTIES.sort(() => 0.5 - Math.random()),
+    });
   }
 
   async loadWeb3() {
@@ -109,7 +162,7 @@ class App extends Component {
     if (this.state.cardsWon.includes(cardId)) {
       return window.location.origin + "/images/white.png";
     } else if (this.state.cardsChosenId.includes(cardId)) {
-      return CARD_ARRAY[cardId].img;
+      return CARD_ARRAY_KITTIES[cardId].img;
     } else {
       return window.location.origin + "/images/blank.png";
     }
@@ -142,13 +195,17 @@ class App extends Component {
       this.state.token.methods
         .mint(
           this.state.account,
-          window.location.origin + CARD_ARRAY[optionOneId].img.toString()
+          window.location.origin +
+            CARD_ARRAY_KITTIES[optionOneId].img.toString()
         )
         .send({ from: this.state.account })
         .on("transactionHash", (hash) => {
           this.setState({
             cardsWon: [...this.state.cardsWon, optionOneId, optionTwoId],
-            tokenURIs: [...this.state.tokenURIs, CARD_ARRAY[optionOneId].img],
+            tokenURIs: [
+              ...this.state.tokenURIs,
+              CARD_ARRAY_KITTIES[optionOneId].img,
+            ],
           });
         });
     } else {
@@ -158,7 +215,7 @@ class App extends Component {
       cardsChosen: [],
       cardsChosenId: [],
     });
-    if (this.state.cardsWon.length === CARD_ARRAY.length) {
+    if (this.state.cardsWon.length === CARD_ARRAY_KITTIES.length) {
       alert("Congratulations! You found them all!");
     }
   };
