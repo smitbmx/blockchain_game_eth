@@ -6,3 +6,8 @@
   border-radius: 50%;
   display: inline-block;
 }
+
+.tile {
+  height: 100px;
+  width: 100px;
+}

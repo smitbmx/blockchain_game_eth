@@ -271,6 +271,7 @@ class App extends Component {
                   {this.state.cardArray.map((card, key) => {
                     return (
                       <img
+                        className="tile"
                         key={key}
                         src={this.chooseImage(key)}
                         data-id={key}
@@ -295,7 +296,7 @@ class App extends Component {
 
                   <div className="grid mb-4">
                     {this.state.tokenURIs.map((tokenURI, key) => {
-                      return <img key={key} src={tokenURI} />;
+                      return <img className="tile" key={key} src={tokenURI} />;
                     })}
                   </div>
                 </div>
